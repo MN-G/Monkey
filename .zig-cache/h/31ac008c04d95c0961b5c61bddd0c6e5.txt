@@ -1,6 +1,6 @@
 0
 15678 2290228 1760154801000000000 f0bdf7a0d76753ffab1319907ec69cf1 1 compiler/test_runner.zig
-3270 3146828 1769220952104788244 92eb4283c61920c8d91dd642f6066aad 0 src/parserTest.zig
+3552 3306376 1769731303752563282 8d8e80131470b16eb9b1d50757bd242b 0 src/parserTest.zig
 22376 2309416 1760154801000000000 2d968f90418b6afe5ba91eaa2e18ba71 1 ubsan_rt.zig
 11083 2290530 1760154798000000000 3c8016eb348fede9a19b94ec4869d8a6 1 compiler_rt.zig
 7957 2309343 1760154801000000000 0ebbb46b337b65e85e7d177cfc93d2ca 1 std/std.zig
@@ -834,8 +834,8 @@
 419 2309242 1760154801000000000 ed7dfc04a5d0c4f0853edb5414ce981e 1 std/os/linux/bpf/btf_ext.zig
 24293 2309243 1760154801000000000 0c7d3ee9ea8e698a843ee6039fd161c4 1 std/os/linux/bpf/helpers.zig
 3221 2308990 1760154801000000000 fda67b74062c7f535bb0a6d0f1fe74fb 1 std/crypto/codecs/asn1/der/ArrayListReverse.zig
-3270 3146828 1769220952104788244 92eb4283c61920c8d91dd642f6066aad 0 /home/mng/PlayGround/Books/Interpreter/Monkey/src/parserTest.zig
-1584 3296856 1769672776179759892 cf5ff3c16debf444eb8e00eded20033a 0 /home/mng/PlayGround/Books/Interpreter/Monkey/src/Ast/ast.zig
+3552 3306376 1769731303752563282 8d8e80131470b16eb9b1d50757bd242b 0 /home/mng/PlayGround/Books/Interpreter/Monkey/src/parserTest.zig
+1584 3305880 1769729529470408131 cf5ff3c16debf444eb8e00eded20033a 0 /home/mng/PlayGround/Books/Interpreter/Monkey/src/Ast/ast.zig
 4147 2868986 1768513777290413297 4c0f581f5e94787f59df2850b9792da7 0 /home/mng/PlayGround/Books/Interpreter/Monkey/src/Lexer/lexer.zig
 857 2864089 1768511431484224701 495ada7034cf01c617a7f5b6f233c003 0 /home/mng/PlayGround/Books/Interpreter/Monkey/src/Token/token.zig
-2666 3299589 1769709868432694202 9293ccb677c6ce8cc78fc8000caaea95 0 /home/mng/PlayGround/Books/Interpreter/Monkey/src/Parser/parser.zig
+3407 3306399 1769731446281911762 dc7780a6e568f428fbfa6d13a9d49e70 0 /home/mng/PlayGround/Books/Interpreter/Monkey/src/Parser/parser.zig

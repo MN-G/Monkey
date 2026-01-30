@@ -4,11 +4,15 @@ const Lexer = @import("../Lexer/lexer.zig").Lexer;
 const Token = @import("../Token/token.zig").Token;
 const TokenType = @import("../Token/token.zig").TokenType;
 
+pub const ParserError = struct {
+    errors: []const u8,
+};
+
 pub const Parser = struct {
     lexer: *Lexer,
-
     current_token: Token,
     peek_token: Token,
+    errors: std.ArrayList([]const u8),
     allocator: std.mem.Allocator,
 
     pub fn init(allocator: std.mem.Allocator, l: *Lexer) Parser {
@@ -17,12 +21,19 @@ pub const Parser = struct {
             .allocator = allocator,
             .current_token = undefined,
             .peek_token = undefined,
+            .errors = .empty,
         };
 
         p.nextToken();
         p.nextToken();
 
         return p;
+    }
+    pub fn deinit(self: *Parser) void {
+        for (self.errors.items) |item| {
+            self.allocator.free(item);
+        }
+        self.errors.deinit(self.allocator);
     }
     pub fn nextToken(self: *Parser) void {
         self.current_token = self.peek_token;
@@ -78,11 +89,20 @@ pub const Parser = struct {
     pub fn peekTokenIs(self: *Parser, token_type: TokenType) bool {
         return token_type == self.peek_token.type;
     }
+    pub fn peekError(self: *Parser, token_type: TokenType) void {
+        const error_message =
+            std.fmt.allocPrint(self.allocator, "Expected {s}, got {s}.", .{
+                @tagName(token_type),
+                @tagName(self.peek_token.type),
+            }) catch "Out of memory while reporting error";
+        self.errors.append(self.allocator, error_message) catch {};
+    }
     pub fn expectPeekToken(self: *Parser, token_type: TokenType) bool {
         if (self.peekTokenIs(token_type)) {
             self.nextToken();
             return true;
         } else {
+            self.peekError(token_type);
             return false;
         }
     }

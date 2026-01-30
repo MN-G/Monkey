@@ -42,20 +42,21 @@ test "manual ast construction" {
 
 test "test let statements" {
     const input =
-        \\ let x = 5;
+        \\ let x  5;
         \\ let y = 10;
-        \\ let foobar = 838383;
+        \\ let foobar 838383;
     ;
 
     const allocator = std.testing.allocator;
     var l = Lexer.init(input);
     var p = Parser.init(allocator, &l);
+    defer p.deinit();
 
     var program = try p.parseProgram();
     defer program.deinit(allocator);
 
-    if (program.statements.items.len != 3) {
-        std.debug.print("\nprogram.statements does not contain 3 statements. got={d}\n", .{program.statements.items.len});
+    if (program.statements.items.len != 1) {
+        std.debug.print("\nprogram.statements does not contain 1 statements. got={d}\n", .{program.statements.items.len});
         return error.TestUnexpectedStatementCount;
     }
 
@@ -64,15 +65,14 @@ test "test let statements" {
     };
 
     const tests = [_]TestCase{
-        .{ .expected_identifier = "x" },
         .{ .expected_identifier = "y" },
-        .{ .expected_identifier = "foobar" },
     };
 
     for (tests, 0..) |tt, i| {
         const stmt = program.statements.items[i];
         try testLetStatement(stmt, tt.expected_identifier);
     }
+    try checkParserErrors(p.errors);
 }
 
 fn testLetStatement(s: ast.Statement, name: []const u8) !void {
@@ -95,4 +95,14 @@ fn testLetStatement(s: ast.Statement, name: []const u8) !void {
         },
         else => return error.TestNotALetStatement,
     }
+}
+fn checkParserErrors(errors: std.ArrayList([]const u8)) !void {
+    if (errors.items.len == 0) {
+        return;
+    }
+    std.debug.print("Parser has {d} errors", .{errors.items.len});
+    for (errors.items) |value| {
+        std.debug.print("Parser error: {s}", .{value});
+    }
+    return error.ParserError;
 }
